@@ -1,6 +1,7 @@
 package com.lsmaker.LinearStructure;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A class of SeqLinearList. 
@@ -11,12 +12,14 @@ import java.util.ArrayList;
 public class SeqLinearList<E> extends LinearList<E> {
 	
 	public SeqLinearList() {
-		new ArrayList<E>(MAXLENGTH).toArray(elements);
-		length = 0;
+		this(null, 0);
 	}
 	
 	public SeqLinearList(E[] elements, int length) {
-		this.elements = elements;
+		this.elements = new ArrayList<E>(MAXLENGTH);
+		for(int i=0;i<elements.length;i++) {
+			insert(elements[i]);
+		}
 		this.length = length;
 	}
 	
@@ -33,13 +36,7 @@ public class SeqLinearList<E> extends LinearList<E> {
 
 	@Override
 	public void insert(E element, int index) {
-		if(isFull() == true) {
-			overFlow();
-		}
-		for(int i=length; i > index; i--) {
-			elements[i] = elements[i-1];
-		}
-		elements[index] = element;
+		elements.add(index,element);
 		length++;
 	} 
 
@@ -54,19 +51,19 @@ public class SeqLinearList<E> extends LinearList<E> {
 			System.out.println("LinearList Empty!");
 			return null;
 		}
-		E element = elements[index];
+		E element = elements.get(index);
 		for(int i= index; i<length-1;i++) {
-			elements[i] = elements[i+1];
+			elements.set(i, elements.get(i+1));
 		}
-		length--;
+		elements.set(--length, null);
 		return element;
 	}
 
 	@Override
 	public int find(E element) {
 		int index = -1;
-		for(int i=0;i<elements.length;i++) {
-			if(elements[i].equals(element)) {
+		for(int i=0;i<length;i++) {
+			if(elements.get(i).equals(element)) {
 				index = i;
 			}
 		}
@@ -74,26 +71,36 @@ public class SeqLinearList<E> extends LinearList<E> {
 	}
 	
 	public boolean isFull() {
-		if(length == elements.length) {
+		if(length == MAXLENGTH) {
 			return true;
 		}
 		return false;
 	}
 	
-	@SuppressWarnings("null")
 	private void overFlow() {
 		int currentLength = length + FLOWLENGTH;
-		E[] tempelements = null;
-		new ArrayList<E>(currentLength).toArray(tempelements);
+		List<E> tempelements = new ArrayList<E>(currentLength);
 		for(int i=0;i<length;i++) {
-			tempelements[i] = elements[i];
+			tempelements.set(i, elements.get(i));
 		}
 		elements = tempelements;
+		MAXLENGTH += FLOWLENGTH;
 	}
 	
-	private static final int MAXLENGTH = 50;
+	@Override
+	public String traverse() {
+		StringBuilder result = new StringBuilder();
+		for(int i=0;i<length-1;i++) {
+			result.append(elements.get(i).toString() + ",");
+		}
+		result.append(elements.get(length-1));
+		return result.toString();
+	}
+	
+	private static int MAXLENGTH = 50;
 	private static final int FLOWLENGTH = 20;
 	
-	private E[] elements;
+	private List<E> elements;
 	private int length;
+	
 }

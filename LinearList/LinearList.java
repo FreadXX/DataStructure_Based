@@ -53,4 +53,12 @@ public abstract class LinearList<E> {
 	 * @return	the index of the element, -1 for none.
 	 */
 	public abstract int find(E element);
+	
+	/**
+	 * this method traverse all elements in the linearlist.
+	 * use the toString() method to Convert the Element to String, 
+	 * and concat the String with mark ','.
+	 * @return the traversal String connected by ','
+	 */
+	public abstract String traverse();
 }
