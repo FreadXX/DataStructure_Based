@@ -1,4 +1,4 @@
-package com.lsmaker.LinearStructure;
+package com.lsmaker.LinearList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +17,10 @@ public class SeqLinearList<E> extends LinearList<E> {
 	
 	public SeqLinearList(E[] elements, int length) {
 		this.elements = new ArrayList<E>(MAXLENGTH);
-		for(int i=0;i<elements.length;i++) {
-			insert(elements[i]);
+		if(elements != null) {
+			for(int i=0;i<elements.length;i++) {
+				insert(elements[i]);
+			}
 		}
 		this.length = length;
 	}
@@ -36,19 +38,30 @@ public class SeqLinearList<E> extends LinearList<E> {
 
 	@Override
 	public void insert(E element, int index) {
+		if(length == MAXLENGTH) {
+			overFlow();
+		}
+		if(index < 0 || index > length) {
+			System.out.println("Illegal Parameter : index");
+			return ;
+		}
 		elements.add(index,element);
 		length++;
 	} 
 
 	@Override
 	public E delete() {
-		return delete(length);
+		return delete(length-1);
 	}
 
 	@Override
 	public E delete(int index) {
 		if(isEmpty() == true) {
 			System.out.println("LinearList Empty!");
+			return null;
+		}
+		if(index < 0 || index >= length) {
+			System.out.println("Illegal Parameter : index");
 			return null;
 		}
 		E element = elements.get(index);
@@ -90,10 +103,12 @@ public class SeqLinearList<E> extends LinearList<E> {
 	@Override
 	public String traverse() {
 		StringBuilder result = new StringBuilder();
-		for(int i=0;i<length-1;i++) {
-			result.append(elements.get(i).toString() + ",");
+		if(length > 0) {
+			for(int i=0;i<length-1;i++) {
+				result.append(elements.get(i).toString() + ",");
+			}
+			result.append(elements.get(length-1));
 		}
-		result.append(elements.get(length-1));
 		return result.toString();
 	}
 	
