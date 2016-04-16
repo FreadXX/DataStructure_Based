@@ -17,7 +17,7 @@ public class DoubleLinkedLinearList<E> extends LinearList<E>{
 
 	@Override
 	public void insert(E element) {
-		insert(element, length);
+		insert(element, length-1>0 ? length-1 : 0);
 	}
 
 	@Override
@@ -62,11 +62,13 @@ public class DoubleLinkedLinearList<E> extends LinearList<E>{
 			return null;
 		}
 		if(length == 1) {
+			E temp = root.getElement();
 			result = null;
-
+			length--;
+			return temp;
 		} else {
 			DoubleNode<E> n = root;
-			for(int i=0;i<index;i++) {
+			for(int i=0;i<index-1;i++) {
 				n = n.getNextNode();
 			}
 			result = n.getNextNode();
