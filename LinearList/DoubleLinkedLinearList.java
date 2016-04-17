@@ -9,6 +9,34 @@ public class DoubleLinkedLinearList<E> extends LinearList<E>{
 		length = 0;
 	}
 	
+	/**
+	 * @return the root
+	 */
+	public DoubleNode<E> getRoot() {
+		return root;
+	}
+
+	/**
+	 * @param root the root to set
+	 */
+	public void setRoot(DoubleNode<E> root) {
+		this.root = root;
+	}
+
+	/**
+	 * @return the length
+	 */
+	public int getLength() {
+		return length;
+	}
+
+	/**
+	 * @param length the length to set
+	 */
+	public void setLength(int length) {
+		this.length = length;
+	}
+
 	@Override
 	public boolean isEmpty() {
 		
