@@ -3,13 +3,11 @@ package com.lsmaker.Graph;
 import com.datastructor.Stack_Queue.CirCleSeqQueue;
 import com.datastructor.Stack_Queue.Queue;
 
-public class UnDirectionalGraph {
-	
-	
+public class DirectionalGraph {
 	private int vertexNumber;			//图中顶点个数
 	private int[][] edgeMatrix;			//表示边的邻接矩阵
 	
-	public UnDirectionalGraph(int vertexNumber) {
+	public DirectionalGraph(int vertexNumber) {
 		this.vertexNumber = vertexNumber;
 		
 		edgeMatrix = new int[vertexNumber][vertexNumber];	//初始化邻接矩阵
@@ -74,22 +72,20 @@ public class UnDirectionalGraph {
 	 * 插入一个边
 	 * @param edge
 	 */
-	public void insertEdge(UnDirectionalEdge edge) {
-		int vertex1 = edge.getVertex_one();
-		int vertex2 = edge.getVertex_two();
+	public void insertEdge(DirectionalEdge edge) {
+		int vertex1 = edge.getVertex_from();
+		int vertex2 = edge.getVertex_to();
 		edgeMatrix[vertex1-1][vertex2-1] = edge.getCost();
-		edgeMatrix[vertex2-1][vertex1-1] = edge.getCost();
 	}
 	
 	/**
 	 * 删除一个边
 	 * @param edge
 	 */
-	public void deleteEdge(UnDirectionalEdge edge) {
-		int vertex1 = edge.getVertex_one();
-		int vertex2 = edge.getVertex_two();
+	public void deleteEdge(DirectionalEdge edge) {
+		int vertex1 = edge.getVertex_from();
+		int vertex2 = edge.getVertex_to();
 		edgeMatrix[vertex1-1][vertex2-1] = 0;
-		edgeMatrix[vertex2-1][vertex1-1] = 0;
 	}
 	
 	public boolean isEmpty() {
@@ -213,6 +209,48 @@ public class UnDirectionalGraph {
 			if(visit[i] == false) {
 				DFSTraverse(i+1, visit);
 			}
+		}
+	}
+	
+	public void ShortestPathwithDijkstra(int vertex) {
+		boolean[] S = new boolean[vertexNumber];
+		S[vertex - 1] = true;
+		int[] dist = new int[vertexNumber];
+		dist[vertex - 1] = Integer.MAX_VALUE /2;
+		for(int i=0;i<vertexNumber;i++) {		//初始化数组
+			if(i != vertex -1) {
+				dist[i] = edgeMatrix[vertex-1][i] > 0 ? edgeMatrix[vertex-1][i]:Integer.MAX_VALUE / 2;
+				S[i] = false;
+			}
+		}
+		for(int j=0;j<vertexNumber-1;j++) {
+			/*寻找dist中的最小值*/
+			int min = Integer.MAX_VALUE;
+			int index = -1;
+			for(int i=0;i<vertexNumber;i++) {
+				if(dist[i] < min && S[i] == false) {
+					min = dist[i];
+					index = i;
+				}
+			}
+			/*将最小值点加入*/
+			S[index] = true;
+			/*修改dist数组*/
+			for(int i=0;i<vertexNumber;i++) {
+				int temp = edgeMatrix[index][i];
+				if(edgeMatrix[index][i] == 0) {
+					temp = Integer.MAX_VALUE / 2;
+				}
+				int tempValue = dist[index] + temp;
+				dist[i] = dist[i] < tempValue ? dist[i]:tempValue;
+			}
+		}
+		
+		for(int i=0;i<dist.length;i++) {
+			if(i != vertex -1 && dist[i] < Integer.MAX_VALUE / 2) {
+				System.out.println("the cost from " + vertex +" to " + (i+1) + ":" + dist[i]);
+			}
+			
 		}
 	}
 }
