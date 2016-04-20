@@ -50,8 +50,8 @@ public class CirclableDoubleLinkedLinearList<E> extends DoubleLinkedLinearList<E
 	}
 	
 	@Override
-	public int find(E element) {
-		return super.find(element);
+	public int search(E element) {
+		return super.search(element);
 	}
 	
 	@Override

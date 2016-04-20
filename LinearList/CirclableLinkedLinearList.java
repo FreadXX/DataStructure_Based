@@ -48,7 +48,7 @@ public class CirclableLinkedLinearList<E> extends LinkedLinearList<E> implements
 	}
 
 	@Override
-	public int find(E element) {
+	public int search(E element) {
 		if (getLength() == 0)
 			return -1;
 		SimpleNode<E> n = getRoot();

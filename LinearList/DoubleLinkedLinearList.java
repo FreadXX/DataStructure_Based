@@ -111,7 +111,7 @@ public class DoubleLinkedLinearList<E> extends LinearList<E>{
 	}
 
 	@Override
-	public int find(E element) {
+	public int search(E element) {
 		DoubleNode<E> n = root;
 		int index = 0;
 		while (n != null) {
@@ -124,7 +124,20 @@ public class DoubleLinkedLinearList<E> extends LinearList<E>{
 		}
 		return -1;
 	}
-
+	
+	@Override
+	public E find(int index) {
+		if(index < 0 || index >=getLength()) {
+			System.out.println("Find Index Error!");
+			return null;
+		}
+		DoubleNode<E> n = getRoot();
+		for(int i=0; i < index; i++) {
+			n = n.getNextNode();
+		}
+		return n.getElement();
+	}
+	
 	@Override
 	public String traverse() {
 		if (length == 0) {
@@ -143,4 +156,5 @@ public class DoubleLinkedLinearList<E> extends LinearList<E>{
 	
 	private DoubleNode<E> root;
 	private int length;
+	
 }

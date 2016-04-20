@@ -93,7 +93,7 @@ public class LinkedLinearList<E> extends LinearList<E> {
 	}
 
 	@Override
-	public int find(E element) {
+	public int search(E element) {
 		SimpleNode<E> n = getRoot();
 		int index = 0;
 		while (n != null) {
@@ -106,7 +106,20 @@ public class LinkedLinearList<E> extends LinearList<E> {
 		}
 		return -1;
 	}
-
+	
+	@Override
+	public E find(int index) {
+		if(index < 0 || index >=getLength()) {
+			System.out.println("Find Index Error!");
+			return null;
+		}
+		SimpleNode<E> n = getRoot();
+		for(int i=0; i < index; i++) {
+			n = n.getNextNode();
+		}
+		return n.getElement();
+	}
+	
 	@Override
 	public String traverse() {
 		if (getLength() == 0) {
@@ -124,4 +137,5 @@ public class LinkedLinearList<E> extends LinearList<E> {
 
 	private SimpleNode<E> root;
 	private int length;
+	
 }

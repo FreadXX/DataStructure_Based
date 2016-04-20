@@ -1,4 +1,4 @@
-package com.lsmaker.LinearStructure;
+package com.lsmaker.LinearList;
 
 /**
  * The abstract class of LinearList
@@ -8,6 +8,7 @@ package com.lsmaker.LinearStructure;
  *
  */
 public abstract class LinearList<E> {
+	
 	
 	/**
 	 * this method reflect the elements in a linearlist.
@@ -49,10 +50,12 @@ public abstract class LinearList<E> {
 	 * this method search the specified element from the linearlist and return the index of the element.
 	 * if there are more than one elements equal to the specified one in linearlist, return the index of the last element.
 	 * if there are no elements matching in linearlist, return -1.
-	 * @param element the specified element to find
+	 * @param element the specified element to search
 	 * @return	the index of the element, -1 for none.
 	 */
-	public abstract int find(E element);
+	public abstract int search(E element);
+	
+	public abstract E find(int index);
 	
 	/**
 	 * this method traverse all elements in the linearlist.

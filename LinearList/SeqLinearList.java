@@ -73,7 +73,7 @@ public class SeqLinearList<E> extends LinearList<E> {
 	}
 
 	@Override
-	public int find(E element) {
+	public int search(E element) {
 		int index = -1;
 		for(int i=0;i<length;i++) {
 			if(elements.get(i).equals(element)) {
@@ -81,6 +81,11 @@ public class SeqLinearList<E> extends LinearList<E> {
 			}
 		}
 		return index;
+	}
+	
+	@Override
+	public E find(int index) {
+		return elements.get(index);
 	}
 	
 	public boolean isFull() {
@@ -100,6 +105,7 @@ public class SeqLinearList<E> extends LinearList<E> {
 		MAXLENGTH += FLOWLENGTH;
 	}
 	
+	
 	@Override
 	public String traverse() {
 		StringBuilder result = new StringBuilder();
@@ -112,10 +118,11 @@ public class SeqLinearList<E> extends LinearList<E> {
 		return result.toString();
 	}
 	
-	private static int MAXLENGTH = 50;
+	protected int MAXLENGTH = 50;
 	private static final int FLOWLENGTH = 20;
 	
 	private List<E> elements;
 	private int length;
+	
 	
 }
